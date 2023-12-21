@@ -42,9 +42,6 @@ void insertInCache(Pagina *pagina, Cache *cache) {
         cache->tamanio++;
         return;
     }
-    if(cache->tamanio == cache->capacidad){
-        eliminarCache(cache);
-    }
     pagina->sig = cache->cache;
     cache->cache->ant = pagina;
     cache->cache = pagina;
@@ -83,6 +80,45 @@ int hashFn(int numPagina) {
 
 void inicializarHashTable() {
     for(int i=0; i<CANT_PAGINAS; i++){
-        hashTable[i] = newCache();
+        hashTable[i] = NULL;
     }
+}
+
+void solicitarPagina(int numSolicitado, Cache *cache) {
+    if(cache->tamanio == cache->capacidad){
+        eliminarCache(cache);
+    }
+    Pagina * pagina = hashTable[numSolicitado];
+    if(pagina == NULL){
+        pagina = newPagina(numSolicitado);
+        insertInCache(pagina, cache);
+        insertarHashTable(pagina);
+        return;
+    }
+    moveInCache(numSolicitado, cache);
+}
+
+void insertarHashTable(Pagina *pagina) {
+    int pos = hashFn(pagina->numeroPagina);
+    if(hashTable[pos] == NULL){
+        hashTable[pos] = pagina;
+        return;
+    }
+    pagina->sig = hashTable[pos];
+    hashTable[pos]->ant = pagina;
+    hashTable[pos] = pagina;
+
+}
+
+void printCache(Cache *cache) {
+    if(cache->tamanio == 0){
+        printf("Cache vacio\n");
+        return;
+    }
+    Pagina * aux = cache->cache;
+    while (aux){
+        printf("%d\t", aux->numeroPagina);
+        aux = aux->sig;
+    }
+
 }

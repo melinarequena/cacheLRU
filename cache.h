@@ -29,6 +29,8 @@ void solicitarPagina(int numSolicitado, Cache * cache);
 
 int hashFn(int numPagina);
 void inicializarHashTable();
+void insertarHashTable(Pagina * pagina);
 
+void printCache(Cache * cache;)
 
 #endif //CACHELRU_CACHE_H
