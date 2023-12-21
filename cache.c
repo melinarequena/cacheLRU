@@ -62,16 +62,17 @@ void moveInCache(int numSolicitado, Cache *cache) {
     }
 }
 
-void eliminarCache(Cache *cache) {
+int eliminarCache(Cache *cache) {
     if(cache->tamanio == 0){
         printf("Cache vacio");
-        return;
+        return -100;
     }
     Pagina * aux = cache->end;
     cache->end = aux->ant;
     cache->end->sig = NULL;
-    free(aux);
+    //free(aux);
     cache->tamanio--;
+    return aux->numeroPagina;
 }
 
 int hashFn(int numPagina) {
@@ -86,7 +87,7 @@ void inicializarHashTable() {
 
 void solicitarPagina(int numSolicitado, Cache *cache) {
     if(cache->tamanio == cache->capacidad){
-        eliminarCache(cache);
+        printf("\nEliminada pagina %d\n", eliminarCache(cache));
     }
     Pagina * pagina = hashTable[numSolicitado];
     if(pagina == NULL){

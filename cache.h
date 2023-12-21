@@ -23,7 +23,7 @@ Pagina * newPagina(int numPagina);
 Cache * newCache(int capacidad);
 
 void insertInCache(Pagina * pagina, Cache * cache);
-void eliminarCache(Cache * cache);
+int eliminarCache(Cache * cache);
 void moveInCache(int numSolicitado, Cache * cache);
 void solicitarPagina(int numSolicitado, Cache * cache);
 
@@ -31,6 +31,6 @@ int hashFn(int numPagina);
 void inicializarHashTable();
 void insertarHashTable(Pagina * pagina);
 
-void printCache(Cache * cache;)
+void printCache(Cache * cache);
 
 #endif //CACHELRU_CACHE_H
